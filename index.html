@@ -4,257 +4,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SPEI | PDF Library</title>
+<title>SPEI | Study Materials</title>
 
 <style>
 * {
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f3f5f9;
-  color: #202b3c;
+    font-family: Arial, sans-serif;
+    background: #f3f6fc;
+    color: #17243a;
 }
 
 header {
-  background: linear-gradient(135deg, #142c50, #245a91);
-  color: white;
-  padding: 35px 20px;
-  text-align: center;
+    background: linear-gradient(135deg, #142d50, #2563a8);
+    color: white;
+    text-align: center;
+    padding: 65px 20px;
 }
 
 header h1 {
-  margin: 0 0 10px;
-  font-size: 32px;
+    font-size: 38px;
+    margin-bottom: 12px;
 }
 
 header p {
-  color: #dce9f7;
+    color: #dceaff;
+    font-size: 16px;
 }
 
 .container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 25px 18px;
+    max-width: 1000px;
+    margin: 55px auto;
+    padding: 20px;
 }
 
-.search {
-  width: 100%;
-  padding: 15px;
-  border: 1px solid #d5dce7;
-  border-radius: 10px;
-  font-size: 16px;
-  margin-bottom: 25px;
+.heading {
+    text-align: center;
+    margin-bottom: 35px;
 }
 
-.section-title {
-  margin: 30px 0 15px;
-  border-left: 5px solid #2676c9;
-  padding-left: 12px;
+.heading h2 {
+    font-size: 27px;
+    margin-bottom: 10px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 20px;
+.heading p {
+    color: #68758a;
+}
+
+.classes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
 }
 
 .card {
-  background: white;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 3px 12px rgba(0,0,0,.07);
+    background: white;
+    padding: 35px 25px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 5px 25px #142d5010;
+    transition: 0.3s;
+    border: 1px solid #e6ebf3;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 12px 30px #142d5020;
+}
+
+.icon {
+    font-size: 55px;
+    margin-bottom: 20px;
 }
 
 .card h3 {
-  margin: 0 0 12px;
+    font-size: 25px;
+    margin-bottom: 12px;
 }
 
-.preview {
-  width: 100%;
-  height: 260px;
-  border: 1px solid #ddd;
-  border-radius: 7px;
-  background: #f5f5f5;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
+.card p {
+    color: #69768a;
+    margin-bottom: 25px;
+    line-height: 1.6;
 }
 
 .btn {
-  flex: 1;
-  text-align: center;
-  padding: 10px;
-  border-radius: 7px;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: bold;
+    display: inline-block;
+    background: #2563a8;
+    color: white;
+    padding: 13px 28px;
+    text-decoration: none;
+    border-radius: 9px;
+    font-weight: bold;
 }
 
-.view {
-  background: #1769c2;
-  color: white;
-}
-
-.download {
-  background: #e9eef5;
-  color: #24344c;
-}
-
-.hidden {
-  display: none !important;
+.btn:hover {
+    background: #142d50;
 }
 
 footer {
-  text-align: center;
-  padding: 25px;
-  color: #68768a;
+    text-align: center;
+    padding: 25px;
+    color: #778397;
+    margin-top: 50px;
 }
 
-.count {
-  color: #68768a;
-  margin-bottom: 20px;
-}
+@media(max-width:650px) {
+    .classes {
+        grid-template-columns: 1fr;
+    }
 
+    header h1 {
+        font-size: 30px;
+    }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>📚 SPEI PDF Library</h1>
-  <p>All your study materials in one place</p>
+    <h1>📚 SPEI</h1>
+    <p>Your Learning Resources, All in One Place</p>
 </header>
 
 <div class="container">
 
-  <input
-    type="search"
-    id="search"
-    class="search"
-    placeholder="🔍 Search PDFs... (Example: PDF 5, Folder 9)"
-  >
+    <div class="heading">
+        <h2>Select Your Standard</h2>
+        <p>Choose your standard to access chapter-wise study materials.</p>
+    </div>
 
-  <p class="count" id="count">Loading documents...</p>
+    <div class="classes">
 
-  <h2 class="section-title">📁 Folder 9</h2>
-  <div class="grid" id="folder9"></div>
+        <div class="card">
+            <div class="icon">📘</div>
+            <h3>Standard 9</h3>
+            <p>Access study materials, notes and chapter-wise PDF documents for Standard 9.</p>
+            <a href="9th.html" class="btn">Explore Standard 9 →</a>
+        </div>
 
-  <h2 class="section-title">📁 Folder 10</h2>
-  <div class="grid" id="folder10"></div>
+        <div class="card">
+            <div class="icon">📗</div>
+            <h3>Standard 10</h3>
+            <p>Access study materials, notes and chapter-wise PDF documents for Standard 10.</p>
+            <a href="10th.html" class="btn">Explore Standard 10 →</a>
+        </div>
 
+    </div>
 </div>
 
 <footer>
-  © 2026 SPEI | PDF Document Library
+    © 2026 SPEI | Study Materials Portal
 </footer>
-
-<script>
-
-// PDF configuration
-const folders = [
-  { name: "9", total: 11, container: "folder9" },
-  { name: "10", total: 16, container: "folder10" }
-];
-
-const search = document.getElementById("search");
-const count = document.getElementById("count");
-
-function createPDF(folder, number) {
-
-  const path = `${folder}/pdfs/${number}.pdf`;
-
-  const card = document.createElement("div");
-  card.className = "card";
-
-  card.dataset.search =
-    `folder ${folder} pdf ${number} document ${number}`.toLowerCase();
-
-  const heading = document.createElement("h3");
-  heading.textContent = `📄 PDF ${number}`;
-
-  const preview = document.createElement("iframe");
-  preview.className = "preview";
-  preview.loading = "lazy";
-  preview.title = `Folder ${folder}, PDF ${number}`;
-  preview.src = path + "#toolbar=1&navpanes=0";
-
-  const actions = document.createElement("div");
-  actions.className = "actions";
-
-  const view = document.createElement("a");
-  view.className = "btn view";
-  view.href = path;
-  view.target = "_blank";
-  view.rel = "noopener";
-  view.textContent = "View PDF ↗";
-
-  const download = document.createElement("a");
-  download.className = "btn download";
-  download.href = path;
-  download.download = `${folder}-${number}.pdf`;
-  download.textContent = "⬇ Download";
-
-  actions.append(view, download);
-  card.append(heading, preview, actions);
-
-  return card;
-}
-
-// Generate all PDF cards
-let totalPDFs = 0;
-
-folders.forEach(folder => {
-
-  const container = document.getElementById(folder.container);
-
-  for (let i = 1; i <= folder.total; i++) {
-    container.appendChild(createPDF(folder.name, i));
-    totalPDFs++;
-  }
-
-});
-
-// Search functionality
-search.addEventListener("input", function() {
-
-  const query = this.value.toLowerCase().trim();
-  let visible = 0;
-
-  document.querySelectorAll(".card").forEach(card => {
-
-    const match = card.dataset.search.includes(query);
-
-    card.classList.toggle("hidden", !match);
-
-    if (match) visible++;
-
-  });
-
-  document.querySelectorAll(".section-title").forEach(title => {
-
-    const grid = title.nextElementSibling;
-
-    const hasResults = grid.querySelectorAll(
-      ".card:not(.hidden)"
-    ).length > 0;
-
-    title.classList.toggle("hidden", !hasResults);
-
-  });
-
-  count.textContent = `${visible} of ${totalPDFs} PDFs displayed`;
-
-});
-
-count.textContent = `${totalPDFs} PDF documents available`;
-
-</script>
 
 </body>
 </html>
