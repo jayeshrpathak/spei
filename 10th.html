@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standard 10 | SPEI</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f6fc;
+    color: #17243a;
+}
+
+header {
+    background: linear-gradient(135deg, #14533c, #249568);
+    color: white;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 10px;
+}
+
+.back {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 20px;
+    background: #ffffff25;
+    padding: 9px 16px;
+    border-radius: 7px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.search {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #d5dce8;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-bottom: 25px;
+    outline-color: #249568;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.chapter {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    border: 1px solid #e3e9f2;
+    box-shadow: 0 4px 15px #142d5009;
+}
+
+.chapter h3 {
+    font-size: 17px;
+    margin-bottom: 17px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.view {
+    background: #18794e;
+    color: white;
+}
+
+.download {
+    background: #e7f4ec;
+    color: #18794e;
+}
+
+.empty {
+    display: none;
+    text-align: center;
+    color: #68758a;
+    padding: 30px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #778397;
+}
+
+@media(max-width:600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="back">← Back to Home</a>
+    <h1>📗 Standard 10</h1>
+    <p>Chapter-wise Study Materials</p>
+</header>
+
+<div class="container">
+
+    <input
+        type="text"
+        id="search"
+        class="search"
+        placeholder="🔍 Search chapter name..."
+    >
+
+    <div class="grid" id="chapters"></div>
+
+    <div class="empty" id="empty">
+        No chapters found.
+    </div>
+
+</div>
+
+<footer>
+    © 2026 SPEI | Standard 10
+</footer>
+
+<script>
+
+// EDIT CHAPTER NAMES HERE
+// Each PDF number must match its filename in the 10 directory.
+
+const chapters = [
+    { name: "Chapter 1 - Enter Chapter Name", file: "1.pdf" },
+    { name: "Chapter 2 - Enter Chapter Name", file: "2.pdf" },
+    { name: "Chapter 3 - Enter Chapter Name", file: "3.pdf" },
+    { name: "Chapter 4 - Enter Chapter Name", file: "4.pdf" },
+    { name: "Chapter 5 - Enter Chapter Name", file: "5.pdf" },
+    { name: "Chapter 6 - Enter Chapter Name", file: "6.pdf" },
+    { name: "Chapter 7 - Enter Chapter Name", file: "7.pdf" },
+    { name: "Chapter 8 - Enter Chapter Name", file: "8.pdf" },
+    { name: "Chapter 9 - Enter Chapter Name", file: "9.pdf" },
+    { name: "Chapter 10 - Enter Chapter Name", file: "10.pdf" },
+    { name: "Chapter 11 - Enter Chapter Name", file: "11.pdf" },
+    { name: "Chapter 12 - Enter Chapter Name", file: "12.pdf" },
+    { name: "Chapter 13 - Enter Chapter Name", file: "13.pdf" },
+    { name: "Chapter 14 - Enter Chapter Name", file: "14.pdf" },
+    { name: "Chapter 15 - Enter Chapter Name", file: "15.pdf" },
+    { name: "Chapter 16 - Enter Chapter Name", file: "16.pdf" }
+];
+
+const container = document.getElementById("chapters");
+const search = document.getElementById("search");
+const empty = document.getElementById("empty");
+
+function displayChapters(list) {
+
+    container.innerHTML = "";
+
+    empty.style.display = list.length ? "none" : "block";
+
+    list.forEach(chapter => {
+
+        const pdfPath = "10/" + chapter.file;
+
+        const card = document.createElement("div");
+        card.className = "chapter";
+
+        const title = document.createElement("h3");
+        title.textContent = "📄 " + chapter.name;
+
+        const actions = document.createElement("div");
+        actions.className = "actions";
+
+        const view = document.createElement("a");
+        view.href = pdfPath;
+        view.target = "_blank";
+        view.rel = "noopener";
+        view.className = "btn view";
+        view.textContent = "View PDF";
+
+        const download = document.createElement("a");
+        download.href = pdfPath;
+        download.download = chapter.file;
+        download.className = "btn download";
+        download.textContent = "Download";
+
+        actions.append(view, download);
+        card.append(title, actions);
+        container.appendChild(card);
+    });
+}
+
+search.addEventListener("input", function() {
+
+    const value = this.value.toLowerCase();
+
+    const filtered = chapters.filter(chapter =>
+        chapter.name.toLowerCase().includes(value)
+    );
+
+    displayChapters(filtered);
+});
+
+displayChapters(chapters);
+
+</script>
+
+</body>
+</html>
