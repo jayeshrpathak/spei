@@ -10,6 +10,8 @@
       --card: #ffffff;
       --primary: #2563eb;
       --primary-dark: #1d4ed8;
+      --notes: #d97706;
+      --notes-dark: #b45309;
       --text: #0f172a;
       --muted: #64748b;
       --border: #e2e8f0;
@@ -61,7 +63,7 @@
     .title-block p { font-size: 13px; color: var(--muted); }
 
     .container {
-      max-width: 1050px;
+      max-width: 1080px;
       margin: 0 auto;
       padding: 28px 20px 48px;
     }
@@ -87,7 +89,7 @@
 
     .pdf-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
       gap: 18px;
     }
 
@@ -127,19 +129,20 @@
 
     .card-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
     .btn {
       flex: 1;
       text-align: center;
       text-decoration: none;
-      padding: 9px 12px;
+      padding: 9px 10px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       border: none;
+      white-space: nowrap;
     }
 
     .btn-view {
@@ -156,6 +159,13 @@
     }
 
     .btn-open:hover { background: #e2e8f0; }
+
+    .btn-notes {
+      background: var(--notes);
+      color: #fff;
+    }
+
+    .btn-notes:hover { background: var(--notes-dark); }
 
     /* Modal PDF Viewer */
     .modal {
@@ -256,17 +266,17 @@
     const PDF_FOLDER = "9/pdfs/";
 
     const chapters = [
-      { no: "Chapter 1", title: "Introduction to Computer", file: "1.pdf" },
-      { no: "Chapter 2", title: "Types of Computers and Data Representations", file: "2.pdf" },
-      { no: "Chapter 3", title: "Introduction to Operating System", file: "3.pdf" },
-      { no: "Chapter 4", title: "Introduction to Ubuntu", file: "4.pdf" },
-      { no: "Chapter 5", title: "Ubuntu Utilities", file: "5.pdf" },
-      { no: "Chapter 6", title: "Fundamentals of Word Processing", file: "6.pdf" },
-      { no: "Chapter 7", title: "Working with a Document", file: "7.pdf" },
-      { no: "Chapter 8", title: "Working with Tables, Pictures and Mail Merge", file: "8.pdf" },
-      { no: "Chapter 9", title: "Introduction to Presentation Software", file: "9.pdf" },
-      { no: "Chapter 10", title: "Enhancing Presentation", file: "10.pdf" },
-      { no: "Chapter 11", title: "Introduction to Computer Security", file: "11.pdf" }
+      { no: "Chapter 1", title: "Introduction to Computer", file: "1.pdf", notes: "https://docs.google.com/presentation/d/1nq18qLEooYmXqm9ZouckK2OGlWnNEypb3xFq3CqijZw/embed" },
+      { no: "Chapter 2", title: "Types of Computers and Data Representations", file: "2.pdf", notes: "https://docs.google.com/presentation/d/1qKku_pqQjyb5bwfcrEwm-AqbUKBg6bP9S8rOiazO_j4/embed" },
+      { no: "Chapter 3", title: "Introduction to Operating System", file: "3.pdf", notes: "https://docs.google.com/presentation/d/1hLJpd_MXoduLkeSjDOpc1jic79wJ_AFbT-Ku7qh4OKk/embed" },
+      { no: "Chapter 4", title: "Introduction to Ubuntu", file: "4.pdf", notes: "https://docs.google.com/presentation/d/1EmdJ_hX_DdnBpxCeoCqCv6SSGHiCQwMf5GQkTe9qHqQ/embed" },
+      { no: "Chapter 5", title: "Ubuntu Utilities", file: "5.pdf", notes: "https://docs.google.com/presentation/d/1B4AeRyRamUYQvexXNQYSr12Ri4Bi_Npa9CrL4LwhqZw/embed" },
+      { no: "Chapter 6", title: "Fundamentals of Word Processing", file: "6.pdf", notes: "https://docs.google.com/presentation/d/1-tivuJOeJ9hJvw37lEJUDtJ5A5XOGUFoHd7n56Vnf9I/embed" },
+      { no: "Chapter 7", title: "Working with a Document", file: "7.pdf", notes: "https://docs.google.com/presentation/d/1F03UkFHgMgmk_UMK0tL0gSVFca0w2_VjoqTW7x7wPHQ/embed" },
+      { no: "Chapter 8", title: "Working with Tables, Pictures and Mail Merge", file: "8.pdf", notes: "https://docs.google.com/presentation/d/1oy2dg3giLgj-KannF3sC_2ydFaDl8HtSkjyCHxfLR6A/embed" },
+      { no: "Chapter 9", title: "Introduction to Presentation Software", file: "9.pdf", notes: "https://docs.google.com/presentation/d/1eUQjptgGwkeqLhZmFLjiq_vj9BRnVcmIg0bIeflB7AM/embed" },
+      { no: "Chapter 10", title: "Enhancing Presentation", file: "10.pdf", notes: "https://docs.google.com/presentation/d/1XZBag9FXXnGmtBNk70smHO6azdaRs9j9qIdvWXQZSqA/embed" },
+      { no: "Chapter 11", title: "Introduction to Computer Security", file: "11.pdf", notes: "https://docs.google.com/presentation/d/1mE_QlT-42408f0YYvFhfnI5RVGaEFBvPjILIE1AcOkQ/embed" }
     ];
 
     const grid = document.getElementById("pdf-grid");
@@ -276,6 +286,15 @@
     const pdfFrame = document.getElementById("pdf-frame");
     const modalClose = document.getElementById("modal-close");
 
+    function buildNotesHref(item) {
+      const params = new URLSearchParams({
+        std: "9",
+        title: `${item.no}: ${item.title}`,
+        slide: item.notes
+      });
+      return `notes.html?${params.toString()}`;
+    }
+
     function renderPDFs(list) {
       if (!list.length) {
         grid.innerHTML = `<div class="empty-state">No matching PDFs found.</div>`;
@@ -284,6 +303,7 @@
 
       grid.innerHTML = list.map((item) => {
         const fullPath = PDF_FOLDER + item.file;
+        const notesHref = buildNotesHref(item);
         return `
           <div class="pdf-card">
             <div>
@@ -293,6 +313,7 @@
             <div class="card-actions">
               <button class="btn btn-view" onclick="openViewer('${item.no}: ${item.title.replace(/'/g, "\\'")}', '${fullPath}')">Preview</button>
               <a class="btn btn-open" href="${fullPath}" target="_blank" rel="noopener">Open PDF</a>
+              <a class="btn btn-notes" href="${notesHref}">Notes</a>
             </div>
           </div>
         `;
