@@ -10,6 +10,8 @@
       --card: #ffffff;
       --primary: #0f766e;
       --primary-dark: #115e59;
+      --notes: #d97706;
+      --notes-dark: #b45309;
       --text: #0f172a;
       --muted: #64748b;
       --border: #e2e8f0;
@@ -61,7 +63,7 @@
     .title-block p { font-size: 13px; color: var(--muted); }
 
     .container {
-      max-width: 1050px;
+      max-width: 1080px;
       margin: 0 auto;
       padding: 28px 20px 48px;
     }
@@ -87,7 +89,7 @@
 
     .pdf-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
       gap: 18px;
     }
 
@@ -127,19 +129,20 @@
 
     .card-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
     .btn {
       flex: 1;
       text-align: center;
       text-decoration: none;
-      padding: 9px 12px;
+      padding: 9px 10px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       border: none;
+      white-space: nowrap;
     }
 
     .btn-view {
@@ -156,6 +159,13 @@
     }
 
     .btn-open:hover { background: #e2e8f0; }
+
+    .btn-notes {
+      background: var(--notes);
+      color: #fff;
+    }
+
+    .btn-notes:hover { background: var(--notes-dark); }
 
     /* Modal PDF Viewer */
     .modal {
@@ -256,22 +266,22 @@
     const PDF_FOLDER = "10/pdfs/";
 
     const chapters = [
-      { no: "Chapter 1", title: "Introduction to HTML", file: "1.pdf" },
-      { no: "Chapter 2", title: "Head and Body Sections", file: "2.pdf" },
-      { no: "Chapter 3", title: "Handling Images in HTML", file: "3.pdf" },
-      { no: "Chapter 4", title: "List and Table Handling in HTML", file: "4.pdf" },
-      { no: "Chapter 5", title: "Introduction to Calc", file: "5.pdf" },
-      { no: "Chapter 6", title: "Data Editing and Formatting in Calc", file: "6.pdf" },
-      { no: "Chapter 7", title: "Functions in Calc", file: "7.pdf" },
-      { no: "Chapter 8", title: "Charts in Calc", file: "8.pdf" },
-      { no: "Chapter 9", title: "Problem and Problem Solving", file: "9.pdf" },
-      { no: "Chapter 10", title: "Introduction to C Language", file: "10.pdf" },
-      { no: "Chapter 11", title: "Data Types, Operators and Expression in C Language", file: "11.pdf" },
-      { no: "Chapter 12", title: "Using I/O Operations", file: "12.pdf" },
-      { no: "Chapter 13", title: "Decision Structures", file: "13.pdf" },
-      { no: "Chapter 14", title: "Loop Control Structures", file: "14.pdf" },
-      { no: "Chapter 15", title: "Arrays", file: "15.pdf" },
-      { no: "Chapter 16", title: "Functions", file: "16.pdf" }
+      { no: "Chapter 1", title: "Introduction to HTML", file: "1.pdf", notes: "https://docs.google.com/presentation/d/1fkolQcohMUcMw-7UaVNRxZxxFPQZk5_x9-3WpwpDuLw/embed" },
+      { no: "Chapter 2", title: "Head and Body Sections", file: "2.pdf", notes: "https://docs.google.com/presentation/d/1iDtKWa1zhmfdqq50CCTurzRtRLtRstWLwAdfQ_2Xusw/embed" },
+      { no: "Chapter 3", title: "Handling Images in HTML", file: "3.pdf", notes: "https://docs.google.com/presentation/d/14So62zZ5rpRVjAI8IHhDyOAMROHOv9hleBZncE4c3Cg/embed" },
+      { no: "Chapter 4", title: "List and Table Handling in HTML", file: "4.pdf", notes: "https://docs.google.com/presentation/d/1w_mwZDwMSeis1CG0DO_9y8BtLUB_5JTrV6-GgYvWWWw/embed" },
+      { no: "Chapter 5", title: "Introduction to Calc", file: "5.pdf", notes: "https://docs.google.com/presentation/d/1_pcooQQ4gQpkxVXxamBHdBRfHzdqIUjwBv1SfN1ne1s/embed" },
+      { no: "Chapter 6", title: "Data Editing and Formatting in Calc", file: "6.pdf", notes: "https://docs.google.com/presentation/d/1dPiY5RzzxwsT_W9wDKuXgS0sewmZF3ChsuoHSEAx2dc/embed" },
+      { no: "Chapter 7", title: "Functions in Calc", file: "7.pdf", notes: "https://docs.google.com/presentation/d/1bSaTEWp1vJ9q57Db4U2-2GRjOxoZfCZUSeHeOF4cbIk/embed" },
+      { no: "Chapter 8", title: "Charts in Calc", file: "8.pdf", notes: "https://docs.google.com/presentation/d/1rNwIhU25dIxS4scEoS5ucuRS1Uj73zUlRxWkCM1y9Mc/embed" },
+      { no: "Chapter 9", title: "Problem and Problem Solving", file: "9.pdf", notes: "https://docs.google.com/presentation/d/18ppYQjuEsPYpvRQMyeSSOzTOJJIq3pJxR-aQGEFXWuY/embed" },
+      { no: "Chapter 10", title: "Introduction to C Language", file: "10.pdf", notes: "https://docs.google.com/presentation/d/1_GFuDYWrwHS03-4faZ4qbo1bj2QuDCdbelvuoUEckmA/embed" },
+      { no: "Chapter 11", title: "Data Types, Operators and Expression in C Language", file: "11.pdf", notes: "https://docs.google.com/presentation/d/1MUOjCz3eP4o2PhcZ4J68515NeE1RkT5GRbqnPGqtESM/embed" },
+      { no: "Chapter 12", title: "Using I/O Operations", file: "12.pdf", notes: "https://docs.google.com/presentation/d/1RECnb3IAqwPYoxPjkpUL4XzIKN2gFtROew2NYLo6iD4/embed" },
+      { no: "Chapter 13", title: "Decision Structures", file: "13.pdf", notes: "https://docs.google.com/presentation/d/1X2aXqeXwD9O0caiPef6j8LaMhllIZnZSEK-zs-7aS7g/embed" },
+      { no: "Chapter 14", title: "Loop Control Structures", file: "14.pdf", notes: "https://docs.google.com/presentation/d/15bK6GlxRCX_c0klkX3UFKV9qYCFGeEG3SHbjKReqvg0/embed" },
+      { no: "Chapter 15", title: "Arrays", file: "15.pdf", notes: "https://docs.google.com/presentation/d/1Jo6stuVRkLrO74SVr4lvygD6ElsL7WN_1YKmQIeDFUs/embed" },
+      { no: "Chapter 16", title: "Functions", file: "16.pdf", notes: "https://docs.google.com/presentation/d/1zJE2Ua4FEglsv2uypmQoTw5MRPDm6D_xBw5xBlE_frg/embed" }
     ];
 
     const grid = document.getElementById("pdf-grid");
@@ -281,6 +291,15 @@
     const pdfFrame = document.getElementById("pdf-frame");
     const modalClose = document.getElementById("modal-close");
 
+    function buildNotesHref(item) {
+      const params = new URLSearchParams({
+        std: "10",
+        title: `${item.no}: ${item.title}`,
+        slide: item.notes
+      });
+      return `notes.html?${params.toString()}`;
+    }
+
     function renderPDFs(list) {
       if (!list.length) {
         grid.innerHTML = `<div class="empty-state">No matching PDFs found.</div>`;
@@ -289,6 +308,7 @@
 
       grid.innerHTML = list.map((item) => {
         const fullPath = PDF_FOLDER + item.file;
+        const notesHref = buildNotesHref(item);
         return `
           <div class="pdf-card">
             <div>
@@ -298,6 +318,7 @@
             <div class="card-actions">
               <button class="btn btn-view" onclick="openViewer('${item.no}: ${item.title.replace(/'/g, "\\'")}', '${fullPath}')">Preview</button>
               <a class="btn btn-open" href="${fullPath}" target="_blank" rel="noopener">Open PDF</a>
+              <a class="btn btn-notes" href="${notesHref}">Notes</a>
             </div>
           </div>
         `;
