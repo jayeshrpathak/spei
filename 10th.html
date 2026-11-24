@@ -1,234 +1,335 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Standard 10 | SPEI</title>
-
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #f3f6fc;
-    color: #17243a;
-}
-
-header {
-    background: linear-gradient(135deg, #14533c, #249568);
-    color: white;
-    padding: 35px 20px;
-    text-align: center;
-}
-
-header h1 {
-    margin-bottom: 10px;
-}
-
-.back {
-    display: inline-block;
-    color: white;
-    text-decoration: none;
-    margin-bottom: 20px;
-    background: #ffffff25;
-    padding: 9px 16px;
-    border-radius: 7px;
-}
-
-.container {
-    max-width: 1000px;
-    margin: 35px auto;
-    padding: 20px;
-}
-
-.search {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #d5dce8;
-    border-radius: 10px;
-    font-size: 16px;
-    margin-bottom: 25px;
-    outline-color: #249568;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
-
-.chapter {
-    background: white;
-    padding: 22px;
-    border-radius: 12px;
-    border: 1px solid #e3e9f2;
-    box-shadow: 0 4px 15px #142d5009;
-}
-
-.chapter h3 {
-    font-size: 17px;
-    margin-bottom: 17px;
-}
-
-.actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.btn {
-    padding: 10px 16px;
-    border-radius: 7px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.view {
-    background: #18794e;
-    color: white;
-}
-
-.download {
-    background: #e7f4ec;
-    color: #18794e;
-}
-
-.empty {
-    display: none;
-    text-align: center;
-    color: #68758a;
-    padding: 30px;
-}
-
-footer {
-    text-align: center;
-    padding: 25px;
-    color: #778397;
-}
-
-@media(max-width:600px) {
-    .grid {
-        grid-template-columns: 1fr;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Standard 10 - Computer Studies | Jayesh Pathak</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
     }
-}
-</style>
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-back {
+      text-decoration: none;
+      background: #f1f5f9;
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+
+    .btn-back:hover { background: #e2e8f0; }
+
+    .title-block h1 { font-size: 19px; }
+    .title-block p { font-size: 13px; color: var(--muted); }
+
+    .container {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 28px 20px 48px;
+    }
+
+    .search-bar {
+      margin-bottom: 24px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      background: #fff;
+      outline: none;
+    }
+
+    .search-bar input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+    }
+
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 18px;
+    }
+
+    .pdf-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .pdf-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+
+    .ch-badge {
+      display: inline-block;
+      background: #ccfbf1;
+      color: #0f766e;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .pdf-card h3 {
+      font-size: 16px;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-view {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-view:hover { background: var(--primary-dark); }
+
+    .btn-open {
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid var(--border);
+    }
+
+    .btn-open:hover { background: #e2e8f0; }
+
+    /* Modal PDF Viewer */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.72);
+      z-index: 100;
+      padding: 16px;
+      flex-direction: column;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .modal-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-header h3 { font-size: 16px; }
+
+    .modal-close {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .modal-body { flex: 1; background: #334155; }
+    .modal-body iframe { width: 100%; height: 100%; border: none; }
+
+    .empty-state {
+      text-align: center;
+      color: var(--muted);
+      padding: 40px 20px;
+      grid-column: 1 / -1;
+    }
+  </style>
 </head>
-
 <body>
+  <script>
+    if (sessionStorage.getItem("spei_portal_unlocked") !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
 
-<header>
-    <a href="index.html" class="back">← Back to Home</a>
-    <h1>📗 Standard 10</h1>
-    <p>Chapter-wise Study Materials</p>
-</header>
+  <header>
+    <div class="header-left">
+      <a href="index.html" class="btn-back">&larr; Standards</a>
+      <div class="title-block">
+        <h1>Standard 10 &mdash; Computer Studies</h1>
+        <p>Teacher: Jayesh Pathak</p>
+      </div>
+    </div>
+  </header>
 
-<div class="container">
-
-    <input
-        type="text"
-        id="search"
-        class="search"
-        placeholder="🔍 Search chapter name..."
-    >
-
-    <div class="grid" id="chapters"></div>
-
-    <div class="empty" id="empty">
-        No chapters found.
+  <div class="container">
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search chapters or topics..." />
     </div>
 
-</div>
+    <div class="pdf-grid" id="pdf-grid"></div>
+  </div>
 
-<footer>
-    © 2026 SPEI | Standard 10
-</footer>
+  <!-- Built-in PDF Preview Modal -->
+  <div class="modal" id="pdf-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-title">PDF Viewer</h3>
+        <button class="modal-close" id="modal-close">Close &times;</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="pdf-frame" src=""></iframe>
+      </div>
+    </div>
+  </div>
 
-<script>
+  <script>
+    // Change this folder path if needed (e.g., "" for same folder, or "10/pdfs/")
+    const PDF_FOLDER = "pdfs/std10/";
 
-// EDIT CHAPTER NAMES HERE
-// Each PDF number must match its filename in the 10 directory.
+    const chapters = [
+      { no: "Chapter 1", title: "Introduction to HTML", file: "1.pdf" },
+      { no: "Chapter 2", title: "Head and Body Sections", file: "2.pdf" },
+      { no: "Chapter 3", title: "Handling Images in HTML", file: "3.pdf" },
+      { no: "Chapter 4", title: "List and Table Handling in HTML", file: "4.pdf" },
+      { no: "Chapter 5", title: "Introduction to Calc", file: "5.pdf" },
+      { no: "Chapter 6", title: "Data Editing and Formatting in Calc", file: "6.pdf" },
+      { no: "Chapter 7", title: "Functions in Calc", file: "7.pdf" },
+      { no: "Chapter 8", title: "Charts in Calc", file: "8.pdf" },
+      { no: "Chapter 9", title: "Problem and Problem Solving", file: "9.pdf" },
+      { no: "Chapter 10", title: "Introduction to C Language", file: "10.pdf" },
+      { no: "Chapter 11", title: "Data Types, Operators and Expression in C Language", file: "11.pdf" },
+      { no: "Chapter 12", title: "Using I/O Operations", file: "12.pdf" },
+      { no: "Chapter 13", title: "Decision Structures", file: "13.pdf" },
+      { no: "Chapter 14", title: "Loop Control Structures", file: "14.pdf" },
+      { no: "Chapter 15", title: "Arrays", file: "15.pdf" },
+      { no: "Chapter 16", title: "Functions", file: "16.pdf" }
+    ];
 
-const chapters = [
-    { name: "Chapter 1 - Enter Chapter Name", file: "1.pdf" },
-    { name: "Chapter 2 - Enter Chapter Name", file: "2.pdf" },
-    { name: "Chapter 3 - Enter Chapter Name", file: "3.pdf" },
-    { name: "Chapter 4 - Enter Chapter Name", file: "4.pdf" },
-    { name: "Chapter 5 - Enter Chapter Name", file: "5.pdf" },
-    { name: "Chapter 6 - Enter Chapter Name", file: "6.pdf" },
-    { name: "Chapter 7 - Enter Chapter Name", file: "7.pdf" },
-    { name: "Chapter 8 - Enter Chapter Name", file: "8.pdf" },
-    { name: "Chapter 9 - Enter Chapter Name", file: "9.pdf" },
-    { name: "Chapter 10 - Enter Chapter Name", file: "10.pdf" },
-    { name: "Chapter 11 - Enter Chapter Name", file: "11.pdf" },
-    { name: "Chapter 12 - Enter Chapter Name", file: "12.pdf" },
-    { name: "Chapter 13 - Enter Chapter Name", file: "13.pdf" },
-    { name: "Chapter 14 - Enter Chapter Name", file: "14.pdf" },
-    { name: "Chapter 15 - Enter Chapter Name", file: "15.pdf" },
-    { name: "Chapter 16 - Enter Chapter Name", file: "16.pdf" }
-];
+    const grid = document.getElementById("pdf-grid");
+    const searchInput = document.getElementById("search-input");
+    const modal = document.getElementById("pdf-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const pdfFrame = document.getElementById("pdf-frame");
+    const modalClose = document.getElementById("modal-close");
 
-const container = document.getElementById("chapters");
-const search = document.getElementById("search");
-const empty = document.getElementById("empty");
+    function renderPDFs(list) {
+      if (!list.length) {
+        grid.innerHTML = `<div class="empty-state">No matching PDFs found.</div>`;
+        return;
+      }
 
-function displayChapters(list) {
+      grid.innerHTML = list.map((item) => {
+        const fullPath = PDF_FOLDER + item.file;
+        return `
+          <div class="pdf-card">
+            <div>
+              <span class="ch-badge">${item.no}</span>
+              <h3>${item.title}</h3>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-view" onclick="openViewer('${item.no}: ${item.title.replace(/'/g, "\\'")}', '${fullPath}')">Preview</button>
+              <a class="btn btn-open" href="${fullPath}" target="_blank" rel="noopener">Open PDF</a>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
 
-    container.innerHTML = "";
+    function openViewer(title, fileUrl) {
+      modalTitle.textContent = title;
+      pdfFrame.src = fileUrl;
+      modal.classList.add("active");
+    }
 
-    empty.style.display = list.length ? "none" : "block";
+    function closeViewer() {
+      modal.classList.remove("active");
+      pdfFrame.src = "";
+    }
 
-    list.forEach(chapter => {
-
-        const pdfPath = "10/" + chapter.file;
-
-        const card = document.createElement("div");
-        card.className = "chapter";
-
-        const title = document.createElement("h3");
-        title.textContent = "📄 " + chapter.name;
-
-        const actions = document.createElement("div");
-        actions.className = "actions";
-
-        const view = document.createElement("a");
-        view.href = pdfPath;
-        view.target = "_blank";
-        view.rel = "noopener";
-        view.className = "btn view";
-        view.textContent = "View PDF";
-
-        const download = document.createElement("a");
-        download.href = pdfPath;
-        download.download = chapter.file;
-        download.className = "btn download";
-        download.textContent = "Download";
-
-        actions.append(view, download);
-        card.append(title, actions);
-        container.appendChild(card);
+    modalClose.addEventListener("click", closeViewer);
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeViewer();
     });
-}
 
-search.addEventListener("input", function() {
+    searchInput.addEventListener("input", (e) => {
+      const q = e.target.value.toLowerCase();
+      const filtered = chapters.filter(
+        (c) => c.no.toLowerCase().includes(q) || c.title.toLowerCase().includes(q)
+      );
+      renderPDFs(filtered);
+    });
 
-    const value = this.value.toLowerCase();
-
-    const filtered = chapters.filter(chapter =>
-        chapter.name.toLowerCase().includes(value)
-    );
-
-    displayChapters(filtered);
-});
-
-displayChapters(chapters);
-
-</script>
-
+    renderPDFs(chapters);
+  </script>
 </body>
 </html>
