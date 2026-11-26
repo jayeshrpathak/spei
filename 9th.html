@@ -12,6 +12,8 @@
       --primary-dark: #1d4ed8;
       --notes: #d97706;
       --notes-dark: #b45309;
+      --mcq: #059669;
+      --mcq-dark: #047857;
       --text: #0f172a;
       --muted: #64748b;
       --border: #e2e8f0;
@@ -58,6 +60,19 @@
     }
 
     .btn-back:hover { background: #e2e8f0; }
+
+    .btn-mcq {
+      text-decoration: none;
+      background: var(--mcq);
+      color: #fff;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .btn-mcq:hover { background: var(--mcq-dark); }
 
     .title-block h1 { font-size: 19px; }
     .title-block p { font-size: 13px; color: var(--muted); }
@@ -239,6 +254,7 @@
         <p>Teacher: Jayesh Pathak</p>
       </div>
     </div>
+    <a href="mcqs.html" class="btn-mcq">MCQs</a>
   </header>
 
   <div class="container">
