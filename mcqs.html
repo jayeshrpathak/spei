@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCQs - Standard 9 Computer Studies | Jayesh Pathak</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --primary: #2563eb;
+      --mcq: #059669;
+      --mcq-dark: #047857;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-back {
+      text-decoration: none;
+      background: #f1f5f9;
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+
+    .btn-back:hover { background: #e2e8f0; }
+
+    .title-block h1 { font-size: 19px; }
+    .title-block p { font-size: 13px; color: var(--muted); }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 20px 48px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    if (sessionStorage.getItem("spei_portal_unlocked") !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <header>
+    <div class="header-left">
+      <a href="javascript:history.back()" class="btn-back">&larr; Back</a>
+      <div class="title-block">
+        <h1>Standard 9 &mdash; MCQs</h1>
+        <p>Computer Studies | Teacher: Jayesh Pathak</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>Chapter-wise MCQs</h2>
+      <p>Add your MCQ questions, quiz links, or Google Forms here.</p>
+    </div>
+  </div>
+</body>
+</html>
