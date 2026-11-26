@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Computer Studies Prep - 121 MCQs | Standard 10</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --indigo: #4f46e5;
+      --indigo-dark: #4338ca;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --green-bg: #dcfce7;
+      --green-border: #22c55e;
+      --green-text: #15803d;
+      --red-bg: #fee2e2;
+      --red-border: #ef4444;
+      --red-text: #b91c1c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-back {
+      text-decoration: none;
+      background: #f1f5f9;
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+
+    .btn-back:hover { background: #e2e8f0; }
+
+    .brand {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--indigo);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .controls input {
+      width: 60px;
+      padding: 5px 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      text-align: center;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+    }
+
+    .controls input:focus {
+      border-color: var(--indigo);
+    }
+
+    .btn-load {
+      background: var(--indigo);
+      color: #fff;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-load:hover { background: var(--indigo-dark); }
+
+    .score-badge {
+      background: var(--indigo);
+      color: #fff;
+      padding: 9px 18px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 24px auto 60px;
+      padding: 0 16px;
+    }
+
+    .q-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+    }
+
+    .q-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #f8fafc;
+      font-size: 14.5px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .option-label:hover:not(.locked) {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .option-label.locked {
+      cursor: default;
+    }
+
+    .option-label input[type="radio"] {
+      accent-color: #2563eb;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .option-label.correct {
+      background: var(--green-bg);
+      border-color: var(--green-border);
+      color: var(--green-text);
+      font-weight: 700;
+    }
+
+    .option-label.incorrect {
+      background: var(--red-bg);
+      border-color: var(--red-border);
+      color: var(--red-text);
+      font-weight: 500;
+    }
+
+    .feedback {
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feedback.show { display: flex; }
+    .feedback.correct-msg { color: var(--green-text); }
+    .feedback.incorrect-msg { color: var(--red-text); }
+
+    @media (max-width: 720px) {
+      header {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    if (sessionStorage.getItem("spei_portal_unlocked") !== "true") {
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <header>
+    <div class="header-left">
+      <a href="javascript:history.back()" class="btn-back">&larr; Back</a>
+      <div class="brand">📖 Computer Studies Prep - 121 MCQs</div>
+    </div>
+
+    <div class="controls">
+      <span>Range:</span>
+      <input type="number" id="range-start" min="1" max="121" value="1" />
+      <span>to</span>
+      <input type="number" id="range-end" min="1" max="121" value="121" />
+      <button class="btn-load" id="btn-load">Load</button>
+    </div>
+
+    <div class="score-badge" id="score-badge">Score: 0 / 121</div>
+  </header>
+
+  <main class="container" id="quiz-container"></main>
+
+  <script>
+    const allQuestions = [
+      { id: 1, q: "To display the web content, which mark-up language is needed?", options: ["CML", "HTML", "NML", "WML"], ans: 1 },
+      { id: 2, q: "Which of the following is considered as a language for describing web page?", options: ["HTML", "WML", "NML", "CML"], ans: 0 },
+      { id: 3, q: "Which of the following is the full form of HTML?", options: ["Hot Text Manipulation Language", "Hyper Text Manipulation Law", "Hyper Text Markup Language", "Hidden Text Markup Language"], ans: 2 },
+      { id: 4, q: "Which of the following is the full form of SGML?", options: ["Standardized General Markup Language", "System General Manipulation Law", "Standardized Genome Markup Law", "Standardized Gigabyte Markup Language"], ans: 0 },
+      { id: 5, q: "Which of the following refers to an HTML element?", options: ["An opening tag, content and a closing tag", "Angular brackets", "Content", "Any of these"], ans: 0 },
+      { id: 6, q: "Which of the following can be used to specify additional formatting along with an HTML element?", options: ["Numbers", "Attributes", "Comments", "Contents"], ans: 1 },
+      { id: 7, q: "Which of the following refers to a singular tags that do not require content?", options: ["Compete", "Empty", "Null", "Void"], ans: 1 },
+      { id: 8, q: "Which of the following attributes type can appear along with any tag?", options: ["Unique", "Universal", "Trivial", "Preliminary"], ans: 1 },
+      { id: 9, q: "Which type of information can be incorporated in an HTML document?", options: ["Multimedia information", "Text information", "Address and path of filename", "All of these"], ans: 3 },
+      { id: 10, q: "Which of the following is an editor to edit an HTML document?", options: ["SciTE", "BriTE", "LigHT", "SpriTE"], ans: 0 },
+      { id: 11, q: "Which of the following form basic two sections of an HTML code?", options: ["Head and body", "Physical and logical", "Code and browser", "Meta-tags and body"], ans: 0 },
+      { id: 12, q: "The meta-tags in an HTML document are written in which of the following section?", options: ["Body", "Code", "Head", "Special"], ans: 2 },
+      { id: 13, q: "Which of the following about a web page is described when a meta-tag is used in HTML page?", options: ["Author, purpose and keywords", "Layout", "Style", "Size"], ans: 0 },
+      { id: 14, q: "Title of a web page is embedded within which of the following tag?", options: ["<p> and </p>", "<body> and </body>", "<title> and </title>", "<h1> and </h1>"], ans: 2 },
+      { id: 15, q: "In which of the following sections can we add comments in HTML document?", options: ["Head", "Body", "Both head and body", "Either head or body"], ans: 2 },
+      { id: 16, q: "Which of the following is used to specify a colour in HTML code?", options: ["Colour code in hexadecimal", "Colour code in decimal", "Colour mixing model", "Pixel in percentage"], ans: 0 },
+      { id: 17, q: "Which of the following is used to set a visited link in HTML code?", options: ["alink", "vlink", "before link", "after link"], ans: 1 },
+      { id: 18, q: "Which of the following is used to set an active link in HTML code?", options: ["alink", "vlink", "blink", "hlink"], ans: 0 },
+      { id: 19, q: "Which HTML tag allows the insertion of a video file?", options: ["img", "image", "href", "ime"], ans: 2 },
+      { id: 20, q: "Because the image element does not force a new line, it is categorized as what?", options: ["An online image", "An inline image", "An outline image", "Blank image"], ans: 1 },
+      { id: 21, q: "Which of the following represents a recognized image file extension?", options: ["Img", "Move", "Mp3", "Png"], ans: 3 },
+      { id: 22, q: "What is supplied when applying the alt attribute to an image tag?", options: ["Alternative description", "Alt key definition", "Alternative image", "Alternative HTML link"], ans: 0 },
+      { id: 23, q: "Which attributes set the pixel dimensions for an image's height and width?", options: ["Img src", "Height and width", "H and V", "Any of the above"], ans: 1 },
+      { id: 24, q: "Identify the file format that is NOT a valid image type.", options: ["Imv", "Png", "Bmp", "Gif"], ans: 0 },
+      { id: 25, q: "What technique involves turning an entire image into a clickable link?", options: ["Image as hot spot", "Hot text", "Active link", "Any of this"], ans: 0 },
+      { id: 26, q: "What are the two distinct categories of image maps?", options: ["Shopper side and user side", "Server side and client side", "Vendor side and supplier side", "All of these"], ans: 1 },
+      { id: 27, q: "What specific tag is implemented to include an image map?", options: ["Image name", "Htemp", "Map", "Alt"], ans: 2 },
+      { id: 28, q: "The <ul> tag in HTML is used to indicate which type of list?", options: ["Simple list", "Ordered list", "Unordered list", "Simple table"], ans: 2 },
+      { id: 29, q: "The <ol> tag in HTML designates what kind of list?", options: ["Simple list", "Ordered list", "Unordered list", "Simple table"], ans: 1 },
+      { id: 30, q: "Which tag pair is responsible for denoting individual items within a list?", options: ["<li> and </li>", "<items> and </items>", "<object> and </object>", "<table> and </table>"], ans: 0 },
+      { id: 31, q: "Which combination of tags generates a definition list without standard bullet points?", options: ["<ol> and </ol>", "<ul> and </ul>", "<dt> and </dt>", "<pt> and </pt>"], ans: 2 },
+      { id: 32, q: "Which tag pair is applied to create a horizontal row inside an HTML table?", options: ["<tr> and </tr>", "<td> and </td>", "<col> and </col>", "<row> and </row>"], ans: 0 },
+      { id: 33, q: "What attribute should be used if a table cell needs to span multiple rows?", options: ["Colspan", "Rowspan", "Span", "Scope"], ans: 1 },
+      { id: 34, q: "What element splits a browser window into multiple viewable sections?", options: ["Frameset", "Elements", "Layout", "Design"], ans: 0 },
+      { id: 35, q: "Which tag provides fallback content for browsers that cannot render frames?", options: ["Noframe", "Yesframe", "Falseframe", "Trueframe"], ans: 0 },
+      { id: 36, q: "What aspects of an ordered HTML list can be customized?", options: ["Order of the items", "Start number", "Number style", "All of these"], ans: 3 },
+      { id: 37, q: "Which of the following is considered an optional component when building an HTML table?", options: ["Caption of the table", "Heading of the table", "Grouping of columns of the table", "All of these"], ans: 3 },
+      { id: 38, q: "The Calc application falls under which software category?", options: ["Spreadsheet", "Multi-sheet", "Double sheet", "Cannot be determined"], ans: 0 },
+      { id: 39, q: "Which of the following tasks is typically NOT suited for Calc?", options: ["Balance sheet preparation", "Result analysis", "Presenting an idea about a product", "All of these"], ans: 2 },
+      { id: 40, q: "What is the standard file extension for a worksheet saved in Calc?", options: [".ods", ".odd", ".xls", ".obj"], ans: 0 },
+      { id: 41, q: "Entering =starcalcteam() in a Calc cell triggers which of the following?", options: ["Stars", "Photograph of Calc developer team", "Calc licence information", "Calc version information"], ans: 1 },
+      { id: 42, q: "By what methods can you compute the total sum of values in a Calc worksheet?", options: ["By manual entry", "By autosum", "By formula", "All of these"], ans: 3 },
+      { id: 43, q: "When moving a cell with a relative formula to a new destination, what occurs?", options: ["The cell row and columns are changed at destination", "The cell row numbers are changed at destination", "The cell column numbers are changed at destination", "Nothing will be changed"], ans: 3 },
+      { id: 44, q: "Which process is used to organize a dataset sequentially, such as in ascending or descending order?", options: ["Data formatting", "Data validations", "Data filtering", "Data sorting"], ans: 3 },
+      { id: 45, q: "What technique ensures that only valid date values can be entered into a specific cell?", options: ["Data formatting", "Data validations", "Data filtering", "Data sorting"], ans: 1 },
+      { id: 46, q: "Which deletion option strips all data validation rules from a selected cell?", options: ["Delete formatting", "Delete all", "Delete formula", "Delete me"], ans: 1 },
+      { id: 47, q: "What utility in Calc enables you to substitute multiple instances of a specific word?", options: ["Find and replace", "By replace only", "By copy command", "By preview command"], ans: 0 },
+      { id: 48, q: "The page preview feature allows you to adjust which of these settings?", options: ["Borders", "Margins", "Column and row heading", "All of the above"], ans: 1 },
+      { id: 49, q: "Which keyboard shortcut launches the spell checker in Calc?", options: ["F1", "F2", "F4", "F7"], ans: 3 },
+      { id: 50, q: "Which keyboard shortcut opens the help documentation in Calc?", options: ["F1", "F2", "F4", "F7"], ans: 0 },
+      { id: 51, q: "What is the term for the process of arranging data records systematically?", options: ["Sorting", "Searching", "Filtering", "Validating"], ans: 0 },
+      { id: 52, q: "What mechanism allows you to hide unnecessary data from view temporarily?", options: ["Sorting", "Searching", "Filtering", "Validating"], ans: 2 },
+      { id: 53, q: "What mechanism restricts user input to ensure only authorized data is recorded?", options: ["Sorting", "Searching", "Filtering", "Validating"], ans: 3 },
+      { id: 54, q: "How can a user insert a predefined function into a Calc cell?", options: ["Directly typing function name in a cell", "Function wizard or selecting from tool bar", "A and B both", "Depends on functions"], ans: 2 },
+      { id: 55, q: "Every formula or function must begin with which character?", options: ["'=' sign", "Alphabets", "Numbers", "Any of these"], ans: 0 },
+      { id: 56, q: "Identify the function that does NOT fall under the logical category.", options: ["OR", "AND", "NOT", "PROPER"], ans: 3 },
+      { id: 57, q: "Which date and time function could assist in determining if a specific year is a leap year?", options: ["DATE", "TIMESTAMP", "YEARS", "YEARDIFF"], ans: 0 },
+      { id: 58, q: "What mechanisms are available for entering a function inside a spreadsheet cell?", options: ["Through function wizard", "By manually entering", "Both (a) and (b)", "Depends on function"], ans: 2 },
+      { id: 59, q: "What is the maximum number of arguments a standard Calc function can take?", options: ["One", "Two", "Three", "Depends on the function"], ans: 3 },
+      { id: 60, q: "Which of the following can serve as an argument within a Calc function?", options: ["Value", "Text", "Other function", "All of these"], ans: 3 },
+      { id: 61, q: "What menu sequence allows you to print an active chart?", options: ["Insert -> Chart", "File -> View", "File -> Print", "View -> Chart"], ans: 2 },
+      { id: 62, q: "How many axes can be present in a standard Calc chart?", options: ["Two", "Three", "Two or three", "Four"], ans: 2 },
+      { id: 63, q: "Which feature is utilized to generate 3D graphical text objects in Calc?", options: ["Fontwork", "Artwork", "Drawing work", "Graphwork"], ans: 0 },
+      { id: 64, q: "What tool is used to make a chart clickable so it navigates to another destination?", options: ["Activelink", "Hyperlink", "Drawinglink", "Connectionlink"], ans: 1 },
+      { id: 65, q: "Which option allows you to see how your chart will look before finalizing it for output?", options: ["Save as XHTML", "Page preview", "Export chart", "Any of these"], ans: 1 },
+      { id: 66, q: "Which symbol denotes an absolute cell reference, preventing row or column values from shifting?", options: ["#", "$", "&", "%"], ans: 1 },
+      { id: 67, q: "To what kinds of destinations can you link a Calc chart?", options: ["To an existing document", "To a new document", "Web page", "All of these"], ans: 3 },
+      { id: 68, q: "Which text is typically written inside the terminal symbol to begin a flowchart?", options: ["Start", "Start", "Start", "Start"], ans: 0 },
+      { id: 69, q: "What do we call a sequenced list of instructions designed to resolve a specific problem?", options: ["Algorithm", "Flowchart", "Sequence", "Roadmap"], ans: 0 },
+      { id: 70, q: "Which geometric shape is reserved for evaluating logical conditions in a flowchart?", options: ["Diamond", "Circle", "Arrow", "Square"], ans: 0 },
+      { id: 71, q: "What symbol signifies output operations on a flowchart diagram?", options: ["Square", "Circle", "Parallelogram", "Triangle"], ans: 2 },
+      { id: 72, q: "Which shape functions as the standard terminal (start/end) symbol?", options: ["Circle", "Diamond", "Rounded Rectangle", "Square"], ans: 2 },
+      { id: 73, q: "What is the fundamental purpose of creating algorithms and flowcharts?", options: ["Know the memory capacity", "Identify the base of the number system", "Direct the output to the printer", "Specify the problem completely and clearly"], ans: 3 },
+      { id: 74, q: "Which item listed below is NOT considered a formal problem-solving technique?", options: ["Pseudo code", "Flowchart", "Algorithm", "Sequence"], ans: 3 },
+      { id: 75, q: "Which technique relies on a pictorial layout to map out a solution?", options: ["Pseudo code", "Flowchart", "Algorithm", "Computer program"], ans: 1 },
+      { id: 76, q: "What does the arrow symbol indicate in a flowchart?", options: ["The flow of an action", "The sequence of action", "The start of actions", "The completion of an action"], ans: 1 },
+      { id: 77, q: "Which part represents the central action or execution phase of a solution?", options: ["Input", "Output", "Process", "Algorithm"], ans: 2 },
+      { id: 78, q: "Which flowchart shape corresponds to a processing step?", options: ["Rectangle", "Square", "Circle", "Diamond"], ans: 0 },
+      { id: 79, q: "How are different connector pairs differentiated when breaking a flowchart across pages?", options: ["Arrows are used", "Alphabets or other characters are used", "Circles are used", "Diamonds are used"], ans: 1 },
+      { id: 80, q: "What is the standard file extension applied to a C source code file?", options: ["c", "h", "s", "t"], ans: 0 },
+      { id: 81, q: "The character set in C is divided into how many distinct categories?", options: ["0", "2", "4", "8"], ans: 2 },
+      { id: 82, q: "To which character category does the equals sign (=) belong in C?", options: ["Letter", "Blank Space", "Special Character", "Digit"], ans: 2 },
+      { id: 83, q: "Which of the following is an authorized keyword built into the C language?", options: ["ofsize", "sizeof", "forsize", "sizefor"], ans: 1 },
+      { id: 84, q: "Identify the invalid variable name from the following options:", options: ["Register", "Register", "registre", "register"], ans: 3 },
+      { id: 85, q: "Which of these entries is an invalid integer constant representation in C?", options: ["0xG", "0xA", "0xB", "0xD"], ans: 0 },
+      { id: 86, q: "Which of the following represents a valid real constant in C?", options: ["-2.0.5e5", "-20.5e5.5", "-20.5e5", "-20.5e.5"], ans: 2 },
+      { id: 87, q: "Which format properly represents a valid single character constant in C?", options: ["'a'", "'\\a'", "\"a\"", "Both a and b"], ans: 3 },
+      { id: 88, q: "What kind of constants are created using the #define preprocessor directive?", options: ["String constant", "Symbolic constants", "Integer constant", "Single character constant"], ans: 1 },
+      { id: 89, q: "Which function key enables you to compile and directly execute a program in the SciTE editor?", options: ["F7", "F9", "F5", "F8"], ans: 2 },
+      { id: 90, q: "Which keyword is utilized to denote the integer data type in C?", options: ["integer", "Integer", "INTEGER", "int"], ans: 3 },
+      { id: 91, q: "Which keyword indicates the absence of a value or an empty data type?", options: ["void", "Void", "char", "float"], ans: 0 },
+      { id: 92, q: "According to the gcc compiler, how much memory space is allocated for a float variable?", options: ["1", "2", "4", "6"], ans: 2 },
+      { id: 93, q: "Which C keyword represents a valid character value?", options: ["char", "character", "CHAR", "CHARACTER"], ans: 0 },
+      { id: 94, q: "Identify the user-defined data type in C from the following choices.", options: ["int", "enum", "char", "float"], ans: 1 },
+      { id: 95, q: "What keyword allows a programmer to create an alias for an existing data type?", options: ["enum", "def", "pointer", "typedef"], ans: 3 },
+      { id: 96, q: "To which category of C operators does the & symbol belong?", options: ["Relational", "Arithmetic", "Logical", "Bitwise"], ans: 3 },
+      { id: 97, q: "To which category of C operators does the ! symbol belong?", options: ["Relational", "Arithmetic", "Logical", "Bitwise"], ans: 2 },
+      { id: 98, q: "The = symbol performs which specific operation in a C program?", options: ["Equality Check", "Assignment", "Comment", "Formula"], ans: 1 },
+      { id: 99, q: "What does the expression value++ represent in the C language?", options: ["Post Increment", "Post Decrement", "Pre Increment", "Pre Decrement"], ans: 0 },
+      { id: 100, q: "Which of the following devices assist in C language input/output operations?", options: ["Monitor", "Keyboard", "Mouse", "All of these"], ans: 3 },
+      { id: 101, q: "Which device is commonly used to supply input into a program?", options: ["Keyboard", "Speaker", "Printer", "Monitor"], ans: 0 },
+      { id: 102, q: "Identify the function that does NOT perform an input operation.", options: ["getchar()", "getch()", "puts()", "gets()"], ans: 2 },
+      { id: 103, q: "What will be displayed upon executing the statement printf(\"%4s\", \"Krusha\");?", options: ["Krus", "usha", "Krusha", "Krush"], ans: 2 },
+      { id: 104, q: "Which function is best suited for receiving an entire string as input?", options: ["getch()", "gets()", "getchar()", "getc()"], ans: 1 },
+      { id: 105, q: "After evaluating the following code, what will the value of the variable flag be? int flag=0; if(5<8) { flag=1; }", options: ["0", "1", "5", "8"], ans: 1 },
+      { id: 106, q: "Following the execution of this switch statement, what value is assigned to s? x=3; switch (x){ case 1: s='A'; break; case 2: s='B'; break; case 3: s='C'; break; default: s='D'; break; }", options: ["A", "B", "C", "D"], ans: 2 },
+      { id: 107, q: "Determine the final value of the sum variable after this code runs: int number1 = 5, number2 = 10, sum=0; if (number1>number2) sum=sum+number1; else sum=sum+number2;", options: ["0", "5", "10", "12"], ans: 2 },
+      { id: 108, q: "What is the output produced by the following segment? int number1 = 10, number2 = 20; if ((number1+number2) > 35 || (number1 > number2)) printf(\"%d\", number1); else printf(\"%d\", number2);", options: ["10", "20", "35", "Error"], ans: 1 },
+      { id: 109, q: "What output will the following snippet generate? char chr='A'; switch (chr) { case 'A': printf(\"A\"); break; case 'B': printf(\"B\"); break; case 'C': printf(\"C\"); break; }", options: ["A", "B", "C", "Error"], ans: 0 },
+      { id: 110, q: "How many times will the printf statement execute in this loop? int num1=3, num2=6; while(num1<num2) { printf(\" Hello Students...\"); num1=num1+1; }", options: ["1", "2", "3", "6"], ans: 2 },
+      { id: 111, q: "What does the following program print? int a=5, b=10; do { a=a+1; }while( a<=b); printf(\"%d\", a);", options: ["10", "9", "11", "15"], ans: 2 },
+      { id: 112, q: "What is the resulting output of this code? int main(){ int i; for(i=0;i<10;i++); printf(\"%d\", i); }", options: ["0123456789", "9", "10", "Error"], ans: 2 },
+      { id: 113, q: "Upon completion of this code, what is the value stored in the number variable? int number=1; while(number<5){ number=number+1; if(number==3) { continue; } }", options: ["1", "3", "5", "None of these"], ans: 2 },
+      { id: 114, q: "If a C program attempts to retrieve a value using an array subscript that goes beyond the array's defined size, what happens?", options: ["The element will be set to 0.", "The compiler would report an error.", "The program may crash or gives garbage data.", "The array size increases automatically."], ans: 2 },
+      { id: 115, q: "Given this segment, what will the output be? int num[5]={1,2,3,4,5}; int i, j; i=num[1]; j=num[2]; printf(\"%d,%d, %d\", i, j, num[0]);", options: ["1, 2, 3", "2, 3, 1", "1, 2, 0", "3, 4, 5"], ans: 1 },
+      { id: 116, q: "Identify the output generated by the following code: int num[5]={1,2,3}; printf(\"%d, %d\", num[0], num[3]);", options: ["1, 2", "1, 0", "1, 3", "2, 3"], ans: 1 },
+      { id: 117, q: "In the context of the C language, the main() function is categorized as what?", options: ["User defined function", "Library function", "Keyword", "Reserved function"], ans: 0 },
+      { id: 118, q: "What type of value does the main() function return by default?", options: ["Char value", "Float value", "Integer value", "Double value"], ans: 2 },
+      { id: 119, q: "When a function is not supposed to return any value, which keyword is declared as its return type?", options: ["int", "main", "void", "auto"], ans: 2 },
+      { id: 120, q: "Which of the functions below is NOT a standard inbuilt library function?", options: ["pow()", "printf()", "sum()", "sqrt()"], ans: 2 },
+      { id: 121, q: "Determine the value of number2 following the execution of this program: int main(){ int number1 = 2, number2; number2 = sqr(number1); printf(\"number2 = %d\", number2); return 0; } int sqr(int n) { return(n*n); }", options: ["number2 = 4", "number2 = 6", "number2 = 8", "number2 = 18"], ans: 0 }
+    ];
+
+    const letters = ["a", "b", "c", "d"];
+    const quizContainer = document.getElementById("quiz-container");
+    const scoreBadge = document.getElementById("score-badge");
+    const rangeStartInput = document.getElementById("range-start");
+    const rangeEndInput = document.getElementById("range-end");
+    const btnLoad = document.getElementById("btn-load");
+
+    let currentScore = 0;
+    let totalLoaded = 0;
+
+    function updateScore() {
+      scoreBadge.textContent = `Score: ${currentScore} / ${totalLoaded}`;
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function loadQuiz() {
+      let start = parseInt(rangeStartInput.value, 10) || 1;
+      let end = parseInt(rangeEndInput.value, 10) || allQuestions.length;
+
+      start = Math.max(1, Math.min(allQuestions.length, start));
+      end = Math.max(1, Math.min(allQuestions.length, end));
+      if (start > end) [start, end] = [end, start];
+
+      rangeStartInput.value = start;
+      rangeEndInput.value = end;
+
+      const selected = allQuestions.slice(start - 1, end);
+      currentScore = 0;
+      totalLoaded = selected.length;
+      updateScore();
+
+      quizContainer.innerHTML = selected.map((item, idx) => {
+        const qName = `q_${idx}`;
+        const optionsHtml = item.options.map((opt, optIdx) => `
+          <label class="option-label" data-opt="${optIdx}">
+            <input type="radio" name="${qName}" value="${optIdx}" />
+            <span>(${letters[optIdx]}) ${escapeHtml(opt)}</span>
+          </label>
+        `).join("");
+
+        return `
+          <div class="q-card" data-ans="${item.ans}" data-answered="false">
+            <div class="q-title">Q${item.id}. ${escapeHtml(item.q)}</div>
+            <div class="options-list">${optionsHtml}</div>
+            <div class="feedback"></div>
+          </div>
+        `;
+      }).join("");
+
+      document.querySelectorAll(".q-card").forEach((card) => {
+        const correctAns = parseInt(card.dataset.ans, 10);
+        const labels = card.querySelectorAll(".option-label");
+        const radios = card.querySelectorAll('input[type="radio"]');
+        const feedback = card.querySelector(".feedback");
+
+        radios.forEach((radio) => {
+          radio.addEventListener("change", () => {
+            if (card.dataset.answered === "true") return;
+            card.dataset.answered = "true";
+
+            const chosen = parseInt(radio.value, 10);
+
+            radios.forEach((r) => (r.disabled = true));
+            labels.forEach((l) => l.classList.add("locked"));
+
+            if (chosen === correctAns) {
+              labels[chosen].classList.add("correct");
+              feedback.textContent = "✅ Correct! (+1 Mark)";
+              feedback.classList.add("show", "correct-msg");
+              currentScore++;
+              updateScore();
+            } else {
+              labels[chosen].classList.add("incorrect");
+              labels[correctAns].classList.add("correct");
+              feedback.textContent = "❌ Incorrect. The green option is the correct answer.";
+              feedback.classList.add("show", "incorrect-msg");
+            }
+          });
+        });
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    btnLoad.addEventListener("click", loadQuiz);
+    loadQuiz();
+  </script>
+</body>
+</html>
