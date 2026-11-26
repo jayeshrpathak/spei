@@ -101,7 +101,7 @@
       border-color: var(--indigo);
     }
 
-    .btn-shuffle {
+    .btn-load {
       background: var(--indigo);
       color: #fff;
       border: none;
@@ -113,7 +113,7 @@
       transition: background 0.2s;
     }
 
-    .btn-shuffle:hover { background: var(--indigo-dark); }
+    .btn-load:hover { background: var(--indigo-dark); }
 
     .score-badge {
       background: var(--indigo);
@@ -235,7 +235,7 @@
       <input type="number" id="range-start" min="1" max="110" value="1" />
       <span>to</span>
       <input type="number" id="range-end" min="1" max="110" value="110" />
-      <button class="btn-shuffle" id="btn-load">Load &amp; Shuffle</button>
+      <button class="btn-load" id="btn-load">Load</button>
     </div>
 
     <div class="score-badge" id="score-badge">Score: 0 / 110</div>
@@ -367,15 +367,6 @@
     let currentScore = 0;
     let totalLoaded = 0;
 
-    function shuffle(array) {
-      const arr = [...array];
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
     function updateScore() {
       scoreBadge.textContent = `Score: ${currentScore} / ${totalLoaded}`;
     }
@@ -399,7 +390,7 @@
       rangeStartInput.value = start;
       rangeEndInput.value = end;
 
-      const selected = shuffle(allQuestions.slice(start - 1, end));
+      const selected = allQuestions.slice(start - 1, end);
       currentScore = 0;
       totalLoaded = selected.length;
       updateScore();
@@ -415,7 +406,7 @@
 
         return `
           <div class="q-card" data-ans="${item.ans}" data-answered="false">
-            <div class="q-title">Q${idx + 1}. [Orig #${item.id}] ${escapeHtml(item.q)}</div>
+            <div class="q-title">Q${item.id}. ${escapeHtml(item.q)}</div>
             <div class="options-list">${optionsHtml}</div>
             <div class="feedback"></div>
           </div>
