@@ -3,17 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCQs - Standard 9 Computer Studies | Jayesh Pathak</title>
+  <title>Computer Studies Prep - 110 MCQs | Standard 9</title>
   <style>
     :root {
       --bg: #f4f6fb;
       --card: #ffffff;
-      --primary: #2563eb;
-      --mcq: #059669;
-      --mcq-dark: #047857;
+      --indigo: #4f46e5;
+      --indigo-dark: #4338ca;
       --text: #0f172a;
       --muted: #64748b;
       --border: #e2e8f0;
+      --green-bg: #dcfce7;
+      --green-border: #22c55e;
+      --green-text: #15803d;
+      --red-bg: #fee2e2;
+      --red-border: #ef4444;
+      --red-text: #b91c1c;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,29 +31,31 @@
     }
 
     header {
-      background: #fff;
+      background: #ffffff;
       border-bottom: 1px solid var(--border);
-      padding: 16px 24px;
+      padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 12px;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .btn-back {
       text-decoration: none;
       background: #f1f5f9;
       color: var(--text);
-      padding: 8px 14px;
+      padding: 7px 12px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
@@ -57,31 +64,156 @@
 
     .btn-back:hover { background: #e2e8f0; }
 
-    .title-block h1 { font-size: 19px; }
-    .title-block p { font-size: 13px; color: var(--muted); }
+    .brand {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--indigo);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .controls input {
+      width: 60px;
+      padding: 5px 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      text-align: center;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+    }
+
+    .controls input:focus {
+      border-color: var(--indigo);
+    }
+
+    .btn-shuffle {
+      background: var(--indigo);
+      color: #fff;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-shuffle:hover { background: var(--indigo-dark); }
+
+    .score-badge {
+      background: var(--indigo);
+      color: #fff;
+      padding: 9px 18px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
 
     .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 28px 20px 48px;
+      max-width: 780px;
+      margin: 24px auto 60px;
+      padding: 0 16px;
     }
 
-    .card {
+    .q-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
     }
 
-    .card h2 {
-      font-size: 18px;
-      margin-bottom: 8px;
+    .q-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      color: var(--text);
     }
 
-    .card p {
-      color: var(--muted);
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #f8fafc;
+      font-size: 14.5px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .option-label:hover:not(.locked) {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .option-label.locked {
+      cursor: default;
+    }
+
+    .option-label input[type="radio"] {
+      accent-color: #2563eb;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .option-label.correct {
+      background: var(--green-bg);
+      border-color: var(--green-border);
+      color: var(--green-text);
+      font-weight: 700;
+    }
+
+    .option-label.incorrect {
+      background: var(--red-bg);
+      border-color: var(--red-border);
+      color: var(--red-text);
+      font-weight: 500;
+    }
+
+    .feedback {
+      margin-top: 14px;
       font-size: 14px;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feedback.show { display: flex; }
+    .feedback.correct-msg { color: var(--green-text); }
+    .feedback.incorrect-msg { color: var(--red-text); }
+
+    @media (max-width: 720px) {
+      header {
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -95,18 +227,238 @@
   <header>
     <div class="header-left">
       <a href="javascript:history.back()" class="btn-back">&larr; Back</a>
-      <div class="title-block">
-        <h1>Standard 9 &mdash; MCQs</h1>
-        <p>Computer Studies | Teacher: Jayesh Pathak</p>
-      </div>
+      <div class="brand">📖 Computer Studies Prep - 110 MCQs</div>
     </div>
+
+    <div class="controls">
+      <span>Range:</span>
+      <input type="number" id="range-start" min="1" max="110" value="1" />
+      <span>to</span>
+      <input type="number" id="range-end" min="1" max="110" value="110" />
+      <button class="btn-shuffle" id="btn-load">Load &amp; Shuffle</button>
+    </div>
+
+    <div class="score-badge" id="score-badge">Score: 0 / 110</div>
   </header>
 
-  <div class="container">
-    <div class="card">
-      <h2>Chapter-wise MCQs</h2>
-      <p>Add your MCQ questions, quiz links, or Google Forms here.</p>
-    </div>
-  </div>
+  <main class="container" id="quiz-container"></main>
+
+  <script>
+    const allQuestions = [
+      { id: 1, q: "Which of the following is a characteristic of fifth-generation computers?", options: ["Use of vacuum tubes", "Assembly language", "Artificial Intelligence", "Magnetic tape"], ans: 2 },
+      { id: 2, q: "What is the function of the Arithmetic Logic Unit (ALU)?", options: ["Stores data", "Controls hardware", "Performs calculations and logic", "Manages input devices"], ans: 2 },
+      { id: 3, q: "Which key is used to move the cursor to the next tab stop?", options: ["Enter", "Tab", "Ctrl", "Shift"], ans: 1 },
+      { id: 4, q: "The first indigenously developed computer in India was:", options: ["ENIAC", "PARAM", "TIFRAC", "IITAC"], ans: 2 },
+      { id: 5, q: "What is the primary function of system software?", options: ["Play games", "Create documents", "Manage hardware", "Design graphics"], ans: 2 },
+      { id: 6, q: "Which memory type loses data when power is off?", options: ["ROM", "SSD", "RAM", "HDD"], ans: 2 },
+      { id: 7, q: "Which generation introduced microprocessors?", options: ["First", "Second", "Third", "Fourth"], ans: 3 },
+      { id: 8, q: "What is an example of proprietary software?", options: ["Linux", "LibreOffice", "Microsoft Windows", "OpenOffice"], ans: 2 },
+      { id: 9, q: "Which key is used to execute a command?", options: ["Escape", "Enter", "Space", "Tab"], ans: 1 },
+      { id: 10, q: "Which input device converts physical documents into digital form?", options: ["Keyboard", "Scanner", "Mouse", "Printer"], ans: 1 },
+      { id: 11, q: "A collection of programs designed to perform various tasks on a computer is known as what?", options: ["Hardware", "Data", "Software", "Input"], ans: 2 },
+      { id: 12, q: "Which type of computer is designed to provide services or data to other computers called clients?", options: ["Laptop", "Supercomputer", "Tablet", "Server"], ans: 3 },
+      { id: 13, q: "What is the most important feature of a tablet, allowing for typing and navigation without a physical keyboard?", options: ["Pointing device", "Long battery life", "Touchscreen", "Lightweight design"], ans: 2 },
+      { id: 14, q: "What is the name for a set of step-by-step instructions that tells a computer what to do?", options: ["A program", "Hardware", "Data", "A system"], ans: 0 },
+      { id: 15, q: "What is the decimal equivalent of the binary number 101?", options: ["3", "4", "5", "6"], ans: 2 },
+      { id: 16, q: "To convert a binary number to its octal equivalent, the binary digits are grouped into sets of how many?", options: ["Two", "Three", "Four", "Eight"], ans: 1 },
+      { id: 17, q: "In data storage, what is a group of 8 bits called?", options: ["A kilobyte", "A bit", "A byte", "A gigabyte"], ans: 2 },
+      { id: 18, q: "The computer system found inside a smart washing machine or an ATM is an example of what?", options: ["A supercomputer", "An embedded system", "A server", "A desktop computer"], ans: 1 },
+      { id: 19, q: "Weather forecasting by the Indian Meteorological Department (IMD) is a task performed by which type of computer?", options: ["Server", "Supercomputer", "Laptop", "Mainframe Computer"], ans: 1 },
+      { id: 20, q: "Using smart classrooms and digital content for learning is an application of computers in which field?", options: ["Education", "Transportation", "Agriculture", "Government Services"], ans: 0 },
+      { id: 21, q: "What is the major purpose of the operating system?", options: ["Providing user interface", "Acting as resource manager", "Both A and B", "Keeping computer busy all the time"], ans: 2 },
+      { id: 22, q: "Which of the following OS provides only text-based interface?", options: ["MS-DOS", "Ubuntu Desktop", "Windows 11", "Linux"], ans: 0 },
+      { id: 23, q: "Which of the following operating system is designed for providing services to multiple clients?", options: ["Mobile OS", "Server OS", "Desktop OS", "Android OS"], ans: 1 },
+      { id: 24, q: "The main feature of the mobile operating system is:", options: ["Services to multiple clients", "Personal use for executing programs", "Communication", "Scalability"], ans: 2 },
+      { id: 25, q: "Which of the following is not the function of kernel?", options: ["Allocating memory to process", "Communication with I/O devices", "Process scheduling", "User Interface"], ans: 3 },
+      { id: 26, q: "Which of the file system is used on Apple machines?", options: ["APFS", "ext4", "NTFS", "FAT32"], ans: 0 },
+      { id: 27, q: "File access is part of _____ function.", options: ["Process management", "Memory management", "File management", "Security and access control"], ans: 2 },
+      { id: 28, q: "_____ operating system provides clustering and load balancing.", options: ["Mobile", "Desktop", "Server", "MS-DOS"], ans: 2 },
+      { id: 29, q: "Purpose of batch processing is to...", options: ["Improve the processor utilization", "Improve the response time", "Both A and B", "Faster execution"], ans: 0 },
+      { id: 30, q: "Which of the following concept divides the processor time among the processes?", options: ["Interactive workload", "Multiprogramming", "Time sharing", "Process management"], ans: 2 },
+      { id: 31, q: "Who is the developer of Ubuntu?", options: ["RedHat", "Fedora", "Canonical", "Microsoft"], ans: 2 },
+      { id: 32, q: "Which command is used to list files in Ubuntu?", options: ["List", "Show", "ls", "dir"], ans: 2 },
+      { id: 33, q: "Which desktop environment does Ubuntu use by default?", options: ["KDE", "LXDE", "XFCE", "GNOME"], ans: 3 },
+      { id: 34, q: "Which Ubuntu command is used to change file permissions?", options: ["chmod", "Chown", "Perm", "access"], ans: 0 },
+      { id: 35, q: "Which command is used to copy files in Ubuntu?", options: ["mv", "cp", "rm", "copy"], ans: 1 },
+      { id: 36, q: "What does the sudo command do in Ubuntu?", options: ["Runs commands as a guest user", "Saves user data", "Runs commands with root privileges", "Shuts down the system"], ans: 2 },
+      { id: 37, q: "What is GNOME primarily used for in Ubuntu?", options: ["Server management", "Desktop interface", "File compression", "Package installation"], ans: 1 },
+      { id: 38, q: "What does the rm command do?", options: ["Removes a file or directory", "Renames a file", "Creates a new file", "Reads a file"], ans: 0 },
+      { id: 39, q: "What does the touch command do?", options: ["Displays file contents", "Deletes a file", "Creates an empty file", "Copies a file"], ans: 2 },
+      { id: 40, q: "Which user can perform administrative tasks in Ubuntu?", options: ["Root", "User", "System", "Guest"], ans: 0 },
+      { id: 41, q: "Which of the following modes is NOT available in the Ubuntu Calculator by default?", options: ["Basic Mode", "Scientific Mode", "Financial Mode", "Graphing mode"], ans: 3 },
+      { id: 42, q: "What is the main purpose of the 'Financial' mode in the Ubuntu Calculator?", options: ["To solve algebraic expressions", "To convert currencies", "To calculate interest, annuities, and other finance-related values", "To solve statistical problems"], ans: 2 },
+      { id: 43, q: "Which of these operations can be performed in the 'Scientific' mode of Ubuntu Calculator?", options: ["Bitwise logical AND and OR", "Matrix multiplication", "Trigonometric calculations like sin, cos, tan", "Image rendering calculations"], ans: 2 },
+      { id: 44, q: "What is the primary purpose of Gedit in Ubuntu?", options: ["Managing system files", "Editing plain text files", "Browsing the internet", "Playing multimedia files"], ans: 1 },
+      { id: 45, q: "Which of the following is not a feature of Gedit?", options: ["Opening multiple files simultaneously", "Opening multiple windows of Gedit", "Finding and replacing a text string", "Creating tables and storing numbers in it"], ans: 3 },
+      { id: 46, q: "What is GIMP primarily used for?", options: ["Writing code", "Image editing and graphic design", "Audio mixing", "3D modeling"], ans: 1 },
+      { id: 47, q: "Which file format is GIMP's native format used for saving projects with edits preserved?", options: [".jpg", ".png", ".xcf", ".gif"], ans: 2 },
+      { id: 48, q: "Which of the following is TRUE about GIMP?", options: ["It is a paid software available only for Windows", "It does not support third-party plugins", "It is open-source and available for multiple platforms", "It only works with vector graphics"], ans: 2 },
+      { id: 49, q: "Which GIMP tool is best used to remove unwanted parts of an image by cutting them out?", options: ["Scale Tool", "Crop Tool", "Smudge Tool", "Paths Tool"], ans: 1 },
+      { id: 50, q: "Which GIMP tool is used to resize an image?", options: ["Scale Tool", "Crop Tool", "Paths Tool", "Smudge Tool"], ans: 0 },
+      { id: 51, q: "Which of the following is an example of a word processor?", options: ["MS Paint", "LibreOffice Writer", "VLC Player", "Google Chrome"], ans: 1 },
+      { id: 52, q: "What is the primary function of a word processor?", options: ["Play audio files", "Create and edit text documents", "Design websites", "Browse the internet"], ans: 1 },
+      { id: 53, q: "Which of the following is NOT a characteristic of a word processor?", options: ["Spell check", "Text formatting", "Video editing", "Copy and paste"], ans: 2 },
+      { id: 54, q: "LibreOffice Writer belongs to which category of software?", options: ["Web browser", "Open-source office suite", "Image editor", "Database manager"], ans: 1 },
+      { id: 55, q: "Which component of LibreOffice Writer displays page number, word count, and language settings?", options: ["Sidebar", "Formatting Toolbar", "Status Bar", "Menu Bar"], ans: 2 },
+      { id: 56, q: "What is the purpose of using a template in LibreOffice Writer?", options: ["To play music in background", "To get a pre-formatted document layout", "To increase font size", "To convert the file into PDF"], ans: 1 },
+      { id: 57, q: "Which option allows us to save a document with a different name or location in Writer?", options: ["Save", "Close", "Save As", "Export"], ans: 2 },
+      { id: 58, q: "What does the Maximize button do in LibreOffice Writer?", options: ["Closes the document", "Minimizes the window", "Opens the help menu", "Enlarges the window to full screen"], ans: 3 },
+      { id: 59, q: "Which of the following is used to move through the pages of a long document in Writer?", options: ["Title Bar", "Search Bar", "Status Bar", "Scroll Bar"], ans: 3 },
+      { id: 60, q: "Which of the following shortcut can be used to open a Template window in Writer?", options: ["Ctrl + S", "Ctrl + Shift + N", "Ctrl + P", "Ctrl + O"], ans: 1 },
+      { id: 61, q: "Which of the following techniques is used to select a word in LibreOffice Writer?", options: ["Single click", "Double Click", "Triple Click", "Right click"], ans: 1 },
+      { id: 62, q: "Which of the following is a shortcut key for Undo operation?", options: ["Ctrl + X", "Ctrl + Y", "Ctrl + Z", "Ctrl + R"], ans: 2 },
+      { id: 63, q: "Which of the following is a shortcut key to increase the font size?", options: ["Ctrl + Shift + P", "Ctrl + Shift + B", "Ctrl + ]", "Ctrl + ["], ans: 2 },
+      { id: 64, q: "Which of the following features allows the spellings to be corrected automatically?", options: ["Autocomplete", "Autocorrect", "Autotext", "Autofill"], ans: 1 },
+      { id: 65, q: "Which of the following wildcard characters is used to omit a letter from a search?", options: ["#", ":", "^", "$"], ans: 2 },
+      { id: 66, q: "Which of the following is usually the default page setting in LibreOffice Writer?", options: ["Legal", "A4", "Letter", "A3"], ans: 1 },
+      { id: 67, q: "In which of the following orientations a document is wider than it is tall?", options: ["Portrait", "Landscape", "Window", "Block"], ans: 1 },
+      { id: 68, q: "Which of the following shortcut keys is used to center align the text?", options: ["Ctrl + L", "Ctrl + E", "Ctrl + R", "Ctrl + J"], ans: 1 },
+      { id: 69, q: "Which of the following is a margin added to a page layout specifically on the side where the document is to be bound?", options: ["Left", "Right", "Bottom", "Gutter"], ans: 3 },
+      { id: 70, q: "Which of the following is usually used when the order of items does not matter?", options: ["Alignment", "Unordered Bullets", "Ordered Bullets", "Images"], ans: 1 },
+      { id: 71, q: "Which tool helps manage and understand complex data by organizing it into rows and columns?", options: ["Image", "Table", "Mail Merge", "Print"], ans: 1 },
+      { id: 72, q: "Which option in Print dialog box should be selected to print a selected block of data?", options: ["Pages", "All Pages", "Selection", "Block"], ans: 2 },
+      { id: 73, q: "What is the term for the intersection of a row and a column?", options: ["Table", "AutoFormat", "Cell", "Nested table"], ans: 2 },
+      { id: 74, q: "Where can new rows be inserted into a table?", options: ["Above the current row", "Below the current row", "At the left of current column", "Both A and B"], ans: 3 },
+      { id: 75, q: "What is a table within another table called?", options: ["Duplicate table", "Promoted table", "Dual table", "Nested table"], ans: 3 },
+      { id: 76, q: "What are the small green squares that appear around a selected picture known as?", options: ["Ducks", "Edit points", "Placeholders", "Selection points"], ans: 3 },
+      { id: 77, q: "Which toolbar in Writer allows us to insert basic shapes?", options: ["Picture toolbar", "Image toolbar", "Diagram toolbar", "Drawing toolbar"], ans: 3 },
+      { id: 78, q: "What is the keyboard shortcut to open the Print dialog box?", options: ["Ctrl + P", "Alt + P", "Ctrl + Alt + P", "Ctrl + Space + P"], ans: 0 },
+      { id: 79, q: "What is a document printed on paper also known as?", options: ["Chart copy", "Hard copy", "Soft copy", "Duplicate copy"], ans: 1 },
+      { id: 80, q: "Which feature is used to create personalized documents for many people with ease?", options: ["Tables", "AutoFormat", "AutoMail", "Mail Merge"], ans: 3 },
+      { id: 81, q: "Which out of the following is a presentation software?", options: ["Impress", "Writer", "Base", "Calc"], ans: 0 },
+      { id: 82, q: "The topmost bar of Impress window is known as...", options: ["Status bar", "Standard toolbar", "Title bar", "Drawing toolbar"], ans: 2 },
+      { id: 83, q: "Which bar has the New, Open, and Save tool buttons?", options: ["Drawing toolbar", "Line and Filling toolbar", "Standard toolbar", "Picture toolbar"], ans: 2 },
+      { id: 84, q: "Which part of the presentation software displays a thumbnail view of each slide?", options: ["Tasks pane", "Slide pane", "Workspace", "Status bar"], ans: 1 },
+      { id: 85, q: "Which panel has the subsections like Master pages, Layouts and Table Design?", options: ["Tasks pane", "Slide pane", "Workspace", "Status bar"], ans: 0 },
+      { id: 86, q: "Which out of the following is default slide master?", options: ["Designed", "Bordered", "Blank", "Highlighted"], ans: 2 },
+      { id: 87, q: "What is a visual change over time?", options: ["Image", "Audio", "Text", "Animation"], ans: 3 },
+      { id: 88, q: "Which is the visual effect you see when moving from one slide to the next during a presentation?", options: ["Slide Transition", "Custom Animation", "Slide Dynamism", "Slide Transformation"], ans: 0 },
+      { id: 89, q: "Which bar of the Impress interface contains the zoom slider?", options: ["Title bar", "Menu bar", "Standard toolbar", "Status bar"], ans: 3 },
+      { id: 90, q: "What is the shortcut key to begin a full-screen slide show?", options: ["F3", "F5", "F7", "F10"], ans: 1 },
+      { id: 91, q: "Which is the shortcut key to open an existing presentation in Impress?", options: ["Ctrl + P", "Ctrl + S", "Ctrl + X", "Ctrl + O"], ans: 3 },
+      { id: 92, q: "Which section of the 'Tasks Panes' is used for applying animations to slide objects?", options: ["Slide Transition", "Master Slide", "Table Design", "Custom Animation"], ans: 3 },
+      { id: 93, q: "Which menu has the 'Master > Slide Master' option?", options: ["Slide Master menu", "View menu", "Slide menu", "Slideshow menu"], ans: 1 },
+      { id: 94, q: "Which tool in the 'Drawing' toolbar is used to create a circle shape?", options: ["Circle", "Ellipse", "Rectangle", "Arrow"], ans: 1 },
+      { id: 95, q: "Which tool is used to create artistic text effects?", options: ["Slide Transition", "Custom Animation", "Slide Master", "Fontwork Gallery"], ans: 3 },
+      { id: 96, q: "Which menu allows us to adjust slide margins?", options: ["Print Setup", "Slide Setup", "Show Setup", "Page Setup"], ans: 3 },
+      { id: 97, q: "Which option in the 'Background' section allows us to use an image as the slide background?", options: ["Hatching", "Color", "Bitmap", "Gradient"], ans: 2 },
+      { id: 98, q: "What feature allows us to selectively show slides in a presentation?", options: ["Slide Show", "Slide Transition", "Custom Show", "Rehearse Timings"], ans: 2 },
+      { id: 99, q: "Which button in the 'Define Custom Slide Show' dialog box adds selected slides?", options: [">", "<", ">>", "<<"], ans: 2 },
+      { id: 100, q: "Which menu has the 'Rehearse Timings' option?", options: ["Edit", "Slide", "Slide Show", "Tools"], ans: 2 },
+      { id: 101, q: "What is the primary purpose of cyber security?", options: ["To improve computer speed", "To protect digital data from unauthorized access", "To increase internet bandwidth", "To enhance graphic quality"], ans: 1 },
+      { id: 102, q: "Why is it important to follow safe browsing habits?", options: ["To make your internet connection faster", "To avoid exposure to cyber threats and protect personal information", "To access more websites", "To improve computer graphics"], ans: 1 },
+      { id: 103, q: "Which of the following cyber threats looks like legitimate software, but once activated, executes harmful actions?", options: ["Virus", "Worm", "Trojan", "Ransomware"], ans: 2 },
+      { id: 104, q: "Which category of threats demands payment to unlock our data?", options: ["Ransomware", "Virus", "Trojan", "Adware"], ans: 0 },
+      { id: 105, q: "Which of the following is a recommended \"do\" for cyber security?", options: ["Use the same password for all accounts", "Click on pop-up ads frequently", "Regularly update your software", "Share passwords with friends"], ans: 2 },
+      { id: 106, q: "What is a \"don't\" in basic cyber security practices?", options: ["Using strong, unique passwords", "Sharing personal data on unsecured websites", "Logging out from public computers", "Turning on two-factor authentication"], ans: 1 },
+      { id: 107, q: "Cyberbullying typically involves:", options: ["Physical harm", "Using technology to harass someone", "Legal action", "Academic dishonesty"], ans: 1 },
+      { id: 108, q: "Why is using a public Wi-Fi network risky?", options: ["Hackers may steal our data.", "Clicking on such links are safe", "It requires a password", "It is more expensive"], ans: 0 },
+      { id: 109, q: "Which of the following is related to a suspicious link?", options: ["It has a clear, and readable URL", "It appears to come from a trusted source", "It is frequently visited", "Clicking on such links lead to malware download"], ans: 3 },
+      { id: 110, q: "Which of the following is a type of malware?", options: ["Firewall", "Virus", "Encryption", "Browser"], ans: 1 }
+    ];
+
+    const letters = ["a", "b", "c", "d"];
+    const quizContainer = document.getElementById("quiz-container");
+    const scoreBadge = document.getElementById("score-badge");
+    const rangeStartInput = document.getElementById("range-start");
+    const rangeEndInput = document.getElementById("range-end");
+    const btnLoad = document.getElementById("btn-load");
+
+    let currentScore = 0;
+    let totalLoaded = 0;
+
+    function shuffle(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function updateScore() {
+      scoreBadge.textContent = `Score: ${currentScore} / ${totalLoaded}`;
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function loadQuiz() {
+      let start = parseInt(rangeStartInput.value, 10) || 1;
+      let end = parseInt(rangeEndInput.value, 10) || allQuestions.length;
+
+      start = Math.max(1, Math.min(allQuestions.length, start));
+      end = Math.max(1, Math.min(allQuestions.length, end));
+      if (start > end) [start, end] = [end, start];
+
+      rangeStartInput.value = start;
+      rangeEndInput.value = end;
+
+      const selected = shuffle(allQuestions.slice(start - 1, end));
+      currentScore = 0;
+      totalLoaded = selected.length;
+      updateScore();
+
+      quizContainer.innerHTML = selected.map((item, idx) => {
+        const qName = `q_${idx}`;
+        const optionsHtml = item.options.map((opt, optIdx) => `
+          <label class="option-label" data-opt="${optIdx}">
+            <input type="radio" name="${qName}" value="${optIdx}" />
+            <span>(${letters[optIdx]}) ${escapeHtml(opt)}</span>
+          </label>
+        `).join("");
+
+        return `
+          <div class="q-card" data-ans="${item.ans}" data-answered="false">
+            <div class="q-title">Q${idx + 1}. [Orig #${item.id}] ${escapeHtml(item.q)}</div>
+            <div class="options-list">${optionsHtml}</div>
+            <div class="feedback"></div>
+          </div>
+        `;
+      }).join("");
+
+      document.querySelectorAll(".q-card").forEach((card) => {
+        const correctAns = parseInt(card.dataset.ans, 10);
+        const labels = card.querySelectorAll(".option-label");
+        const radios = card.querySelectorAll('input[type="radio"]');
+        const feedback = card.querySelector(".feedback");
+
+        radios.forEach((radio) => {
+          radio.addEventListener("change", () => {
+            if (card.dataset.answered === "true") return;
+            card.dataset.answered = "true";
+
+            const chosen = parseInt(radio.value, 10);
+
+            radios.forEach((r) => (r.disabled = true));
+            labels.forEach((l) => l.classList.add("locked"));
+
+            if (chosen === correctAns) {
+              labels[chosen].classList.add("correct");
+              feedback.textContent = "✅ Correct! (+1 Mark)";
+              feedback.classList.add("show", "correct-msg");
+              currentScore++;
+              updateScore();
+            } else {
+              labels[chosen].classList.add("incorrect");
+              labels[correctAns].classList.add("correct");
+              feedback.textContent = "❌ Incorrect. The green option is the correct answer.";
+              feedback.classList.add("show", "incorrect-msg");
+            }
+          });
+        });
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    btnLoad.addEventListener("click", loadQuiz);
+    loadQuiz();
+  </script>
 </body>
 </html>
