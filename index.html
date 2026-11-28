@@ -357,56 +357,67 @@
 
   <script>
     const AUTH_KEY = "spei_portal_unlocked";
+const REDIRECT_KEY = "spei_redirect_after_auth";
 
-    function getTodayPassword() {
-      const now = new Date();
-      const dd = String(now.getDate()).padStart(2, "0");
-      const mm = String(now.getMonth() + 1).padStart(2, "0");
-      const yyyy = now.getFullYear();
-      return `${dd}${mm}${yyyy}`;
-    }
+function getTodayPassword() {
+  const now = new Date();
+  const dd = String(now.getDate()).padStart(2, "0");
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const yyyy = now.getFullYear();
+  return `${dd}${mm}${yyyy}`;
+}
 
-    const authScreen = document.getElementById("auth-screen");
-    const portalScreen = document.getElementById("portal-screen");
-    const authForm = document.getElementById("auth-form");
-    const passwordInput = document.getElementById("password-input");
-    const errorMsg = document.getElementById("error-msg");
-    const lockBtn = document.getElementById("lock-btn");
+const authScreen = document.getElementById("auth-screen");
+const portalScreen = document.getElementById("portal-screen");
+const authForm = document.getElementById("auth-form");
+const passwordInput = document.getElementById("password-input");
+const errorMsg = document.getElementById("error-msg");
+const lockBtn = document.getElementById("lock-btn");
 
-    function showPortal() {
-      authScreen.style.display = "none";
-      portalScreen.style.display = "flex";
-    }
+function showPortal() {
+  authScreen.style.display = "none";
+  portalScreen.style.display = "flex";
+}
 
-    function showAuth() {
-      portalScreen.style.display = "none";
-      authScreen.style.display = "flex";
-      passwordInput.value = "";
-      errorMsg.textContent = "";
-      passwordInput.focus();
-    }
+function showAuth() {
+  portalScreen.style.display = "none";
+  authScreen.style.display = "flex";
+  passwordInput.value = "";
+  errorMsg.textContent = "";
+  passwordInput.focus();
+}
 
-    // Keep unlocked only for today's date in the current browser session
-    if (sessionStorage.getItem(AUTH_KEY) === getTodayPassword()) {
-      showPortal();
-    }
+function handleUnlocked() {
+  const redirectUrl = sessionStorage.getItem(REDIRECT_KEY);
+  if (redirectUrl) {
+    sessionStorage.removeItem(REDIRECT_KEY);
+    window.location.replace(redirectUrl);
+    return;
+  }
+  showPortal();
+}
 
-    authForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const todayPassword = getTodayPassword();
-      if (passwordInput.value.trim() === todayPassword) {
-        sessionStorage.setItem(AUTH_KEY, todayPassword);
-        showPortal();
-      } else {
-        errorMsg.textContent = "Incorrect password. Please try again.";
-        passwordInput.select();
-      }
-    });
+if (sessionStorage.getItem(AUTH_KEY) === getTodayPassword()) {
+  handleUnlocked();
+}
 
-    lockBtn.addEventListener("click", function () {
-      sessionStorage.removeItem(AUTH_KEY);
-      showAuth();
-    });
+authForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  const todayPassword = getTodayPassword();
+  if (passwordInput.value.trim() === todayPassword) {
+    sessionStorage.setItem(AUTH_KEY, todayPassword);
+    handleUnlocked();
+  } else {
+    errorMsg.textContent = "Incorrect password. Please try again.";
+    passwordInput.select();
+  }
+});
+
+lockBtn.addEventListener("click", function () {
+  sessionStorage.removeItem(AUTH_KEY);
+  sessionStorage.removeItem(REDIRECT_KEY);
+  showAuth();
+});
   </script>
 </body>
 </html>
