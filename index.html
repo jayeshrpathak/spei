@@ -356,7 +356,7 @@
   </div>
 
   <script>
-    const AUTH_KEY = "spei_portal_unlocked";
+ const AUTH_KEY = "spei_portal_unlocked";
 const REDIRECT_KEY = "spei_redirect_after_auth";
 
 function getTodayPassword() {
@@ -397,7 +397,7 @@ function handleUnlocked() {
   showPortal();
 }
 
-if (sessionStorage.getItem(AUTH_KEY) === getTodayPassword()) {
+if (localStorage.getItem(AUTH_KEY) === getTodayPassword()) {
   handleUnlocked();
 }
 
@@ -405,7 +405,7 @@ authForm.addEventListener("submit", function (e) {
   e.preventDefault();
   const todayPassword = getTodayPassword();
   if (passwordInput.value.trim() === todayPassword) {
-    sessionStorage.setItem(AUTH_KEY, todayPassword);
+    localStorage.setItem(AUTH_KEY, todayPassword);
     handleUnlocked();
   } else {
     errorMsg.textContent = "Incorrect password. Please try again.";
@@ -414,7 +414,7 @@ authForm.addEventListener("submit", function (e) {
 });
 
 lockBtn.addEventListener("click", function () {
-  sessionStorage.removeItem(AUTH_KEY);
+  localStorage.removeItem(AUTH_KEY);
   sessionStorage.removeItem(REDIRECT_KEY);
   showAuth();
 });
