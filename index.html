@@ -356,9 +356,15 @@
   </div>
 
   <script>
-    // Change this password anytime
-    const PORTAL_PASSWORD = "spei2026";
     const AUTH_KEY = "spei_portal_unlocked";
+
+    function getTodayPassword() {
+      const now = new Date();
+      const dd = String(now.getDate()).padStart(2, "0");
+      const mm = String(now.getMonth() + 1).padStart(2, "0");
+      const yyyy = now.getFullYear();
+      return `${dd}${mm}${yyyy}`;
+    }
 
     const authScreen = document.getElementById("auth-screen");
     const portalScreen = document.getElementById("portal-screen");
@@ -380,15 +386,16 @@
       passwordInput.focus();
     }
 
-    // Keep unlocked during the current browser session
-    if (sessionStorage.getItem(AUTH_KEY) === "true") {
+    // Keep unlocked only for today's date in the current browser session
+    if (sessionStorage.getItem(AUTH_KEY) === getTodayPassword()) {
       showPortal();
     }
 
     authForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      if (passwordInput.value.trim() === PORTAL_PASSWORD) {
-        sessionStorage.setItem(AUTH_KEY, "true");
+      const todayPassword = getTodayPassword();
+      if (passwordInput.value.trim() === todayPassword) {
+        sessionStorage.setItem(AUTH_KEY, todayPassword);
         showPortal();
       } else {
         errorMsg.textContent = "Incorrect password. Please try again.";
