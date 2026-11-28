@@ -1,4 +1,3 @@
-
 (function () {
   const AUTH_KEY = "spei_portal_unlocked";
   const REDIRECT_KEY = "spei_redirect_after_auth";
@@ -11,7 +10,7 @@
     return `${dd}${mm}${yyyy}`;
   }
 
-  if (sessionStorage.getItem(AUTH_KEY) !== getTodayPassword()) {
+  if (localStorage.getItem(AUTH_KEY) !== getTodayPassword()) {
     sessionStorage.setItem(REDIRECT_KEY, window.location.href);
     const indexUrl = new URL("index.html", document.currentScript.src).href;
     window.location.replace(indexUrl);
